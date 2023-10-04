@@ -127,11 +127,15 @@ class(vancouver_trees)
 
 <!-------------------------- Start your work below ---------------------------->
 
+I will choose the "vancouver_trees" dataset. The reason is that this dataset provides a comprehensive insight into different trees in Vancouver. It will help me study the nature and learn more about Vancouver.
+
 <!----------------------------------------------------------------------------->
 
 1.4 **(2 points)** Time for a  final decision! Going back to the beginning, it's important to have an *end goal* in mind. For example, if I had chosen the `titanic` dataset for my project, I might've wanted to explore the relationship between survival and other variables. Try to think of 1 research question that you would want to answer with your dataset. Note it down below.
 
 <!-------------------------- Start your work below ---------------------------->
+
+What age range do most of Vancouver's trees fall into, and how is their age distribution related to the geographical areas?
 
 <!----------------------------------------------------------------------------->
 
@@ -161,6 +165,59 @@ Make sure that you're using dplyr and ggplot2 rather than base R for this task. 
 2.2 **(4 points)** For each of the 4 exercises that you complete, provide a *brief explanation* of why you chose that exercise in relation to your data (in other words, why does it make sense to do that?), and sufficient comments for a reader to understand your reasoning and code.
 
 <!-------------------------- Start your work below ---------------------------->
+
+## Plot the distribution of a numeric variable - diameter
+
+I chose to plot the distribution of tree diameters because from this plot we can infer about the most common diameters in Vancouver.
+
+```{r}
+vancouver_trees %>%
+  ggplot(aes(x = diameter)) +
+  geom_histogram(binwidth = 5, boundary = 0) +
+  labs(title = "Distribution of Tree Diameters", x = "Diameter", y = "Number of Trees")
+```
+
+## Create a new variable (age) based on other variables in your data
+
+I created a new variable called "age" based on an existing variable "date_planted". Because age can help us understand a tree's stage more intuitively.
+
+```{r}
+vancouver_trees <- vancouver_trees %>%
+  mutate(age = difftime(Sys.Date(), date_planted)) # transfer date_planted to age by using (current time - date_planted)
+print(vancouver_trees)
+```
+
+
+## Explore the relationship between 2 variables (neighbourhood_name and age) in a plot.
+
+The following plot shows the median and the age range of trees in different neighbourhood. It aligns to my first research topic in task 1.4.
+
+```{r}
+# filter out trees with unknown age
+vancouver_trees_filtered <- vancouver_trees %>%
+  filter(!is.na(age))
+
+# plot the age distribution based on neighbourhood name
+vancouver_trees_filtered %>%
+  ggplot(aes(x = neighbourhood_name, y = as.numeric(age))) +
+  geom_boxplot() +
+  labs(title = "Age Distribution of Trees by Neighbourhood in Vancouver",
+       x = "Neighbourhood Name",
+       y = "Age of Trees") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+## Use a boxplot to look at the frequency of different observations within a single variable - age
+
+The boxplot for age can give us insights into the diversity of tree ages in Vancouver.
+
+```{r}
+vancouver_trees %>%
+  filter(!is.na(age)) %>%
+  ggplot(aes(y = as.numeric(age))) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Tree Ages", y = "Age (years)")
+```
 
 <!----------------------------------------------------------------------------->
 
