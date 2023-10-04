@@ -519,6 +519,16 @@ research question that interested you (Task 1.4). Now it’s time to pick
 Write the 4 questions and any additional comments below.
 
 <!--- *****START HERE***** --->
+
+1.  How does the variety of tree species differ across Vancouver
+    neighbourhoods?
+2.  Is there any relationship between tree species and their ages in
+    Vancouver?
+3.  Have there been specific periods with a surge in tree planting in
+    Vancouver?
+4.  Is there any relationship between diameters of trees and the
+    presence of a root barrier or a curb?
+
 <!----------------------------->
 
 # Overall reproducibility/Cleanliness/Coherence Checklist
